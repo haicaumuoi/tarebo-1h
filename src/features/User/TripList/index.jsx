@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Autocomplete, GoogleMap, Marker } from '@react-google-maps/api';
 import triplist from '~/assets/images/triplist.png';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES_PATH } from '~/constants';
+import { API_PATH, ROUTES_PATH } from '~/constants';
+import axiosInstance from '~/app/api';
+import { toast } from 'react-toastify';
 
 function Index() {
   const [triplists, setTriplist] = React.useState([
@@ -53,7 +55,7 @@ function Index() {
       {
         places: [],
         name: inputValue,
-        id: triplists[triplists.length - 1].id + 1,
+        id: triplists[triplists?.length - 1]?.id + 1,
       },
     ]);
     popup.classList.toggle('hidden');
@@ -61,6 +63,40 @@ function Index() {
   };
 
   const navigate = useNavigate();
+
+  const getTrips = async (data) => {
+    try {
+      const res = await axiosInstance.get(API_PATH.triplist?.getList);
+      setTriplist(res?.listTrip);
+      console.log(res?.listTrip);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const postTrips = async (data) => {
+    try {
+      const { response, msg } = await axiosInstance.post(API_PATH.triplist.createTrip, {
+        ...data,
+      });
+      console.log(response);
+      if (+response === 200) {
+        return;
+      } else {
+        toast.error(msg);
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  useEffect(() => {
+    getTrips();
+  }, []);
+
+  const getTripsData = () => {
+    console.log(triplists);
+  };
 
   return (
     <div className="flex">
@@ -102,7 +138,7 @@ function Index() {
           </div>
         </div>
         <div className="text-[#fff] text-4xl flex w-full justify-between items-center h-fit py-3 px-16 font-semibold mt-20">
-          <div>Chuyến đi của bạn ( {triplists.length} )</div>
+          <div onClick={getTripsData}>Chuyến đi của bạn ( {triplists?.length} )</div>
           <div
             className="border-[#fff] border-4 rounded-2xl px-16 py-2 cursor-pointer"
             onClick={toggle}
@@ -110,7 +146,7 @@ function Index() {
             Đi nào!
           </div>
         </div>
-        {triplists.length === 0 ? (
+        {triplists?.length === 0 ? (
           <div className="flex justify-center items-center flex-col">
             <div>
               <img src={triplist} alt="images" />
@@ -134,19 +170,19 @@ function Index() {
           </div>
         ) : (
           <div className="flex flex-col justify-start items-center mt-10">
-            {triplists.map((item, index) => (
+            {triplists?.map((item, index) => (
               <div
                 className="flex h-40 w-11/12 mt-8 border rounded-2xl overflow-hidden"
                 key={index}
               >
                 <div className="w-1/4 h-full bg-[#FFBA00] flex flex-col justify-center items-center text-[5.5rem] font-bold text-[#fff]">
-                  <div>{item.places.length}</div>
+                  <div>{item.__v}</div>
 
-                  <div className="text-lg -mt-6">Địa điểm</div>
+                  <div className="text-lg -mt-6">Địa điểm</d........iv>
                 </div>
-                <div className="w-3/4 h-full bg-[#fff] flex flex-col justify-evenly">
+                <div className="w-3/4 h-full bg-[#fff] flex flex-col ...........justify-evenly">
                   <div className="pl-10 font-semibold text-[#32A071] flex justify-between">
-                    <div>{item.name}</div>
+                    <div>{item.title}</div>
                     <div className="mr-4">
                       <button className="mx-2">modify</button>
                       <button className="mx-2" onClick={() => deleteTrip(item.id)}>
@@ -157,7 +193,7 @@ function Index() {
                   <div className="pl-10 font-semibold bg-[#FFE2948F] bg-opacity-60 text-[#32A071]">
                     <button
                       onClick={() =>
-                        navigate(ROUTES_PATH.user.tripListDetail.replace(':id', item.id))
+                        navigate(ROUTES_PATH.user.tripListDetail.replace(':id', item._id))
                       }
                     >
                       Chi tiet
