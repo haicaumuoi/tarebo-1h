@@ -18,9 +18,7 @@ export const ROUTES_PATH = {
     type: '/:type',
     map: '/map',
     triplist: '/triplist',
-    todolist: '/todolist',
-    expenseslist: '/expenseslist',
-    planlist: '/planlist',
+    tripListDetail: '/triplist/:id',
   },
   admin: {
     home: '/home',

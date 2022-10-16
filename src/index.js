@@ -13,6 +13,7 @@ import './app/i18n';
 import theme from './app/theme';
 import { Loading, Toast } from './components';
 import './index.css';
+import { LoadScript } from '@react-google-maps/api';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -26,7 +27,12 @@ root.render(
             <Suspense fallback={<Loading />}>
               {/* <Toast /> */}
               <Toast />
-              <App />
+              <LoadScript
+                googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
+                libraries={['places']}
+              >
+                <App />
+              </LoadScript>
             </Suspense>
           </Router>
         </ChakraProvider>

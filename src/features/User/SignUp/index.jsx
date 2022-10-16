@@ -102,6 +102,7 @@ const SignUpPage = () => {
               {...register('password')}
               id="password"
               className="border border-gray-400 h-16 rounded-lg my-2 py-5 px-4 focus:outline-none mb-8"
+              type={'password'}
             />
             {errors.password && (
               <span className="text-[#df2a2a]">

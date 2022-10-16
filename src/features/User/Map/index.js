@@ -37,40 +37,38 @@ function Map() {
   };
 
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY} libraries={['places']}>
-      <div className="flex">
-        <div className="w-5/12 h-screen bg-[#aa1e1e] pt-56 overflow-y-scroll">
-          <div className="text-[#fff] ">this is leftside</div>
-          <div>
-            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlacedChange} id="data">
-              <input type="text" />
-            </Autocomplete>
-            <button
-              className="bg-blue-500"
-              onClick={() => {
-                map.panTo();
-              }}
-            >
-              Find
-            </button>
-          </div>
-          {img.map((item) => (
-            <img className="h-48" src={item} alt="" />
-          ))}
-        </div>
-
-        <div className="w-7/12 h-screen">
-          <GoogleMap
-            mapContainerStyle={{ width: '100%', height: '100%' }}
-            zoom={18}
-            center={center}
-            onLoad={(map) => setMap(map)}
+    <div className="flex">
+      <div className="w-5/12 h-screen bg-[#aa1e1e] pt-56 overflow-y-scroll">
+        <div className="text-[#fff] ">this is leftside</div>
+        <div>
+          <Autocomplete onLoad={onLoad} onPlaceChanged={onPlacedChange} id="data">
+            <input type="text" />
+          </Autocomplete>
+          <button
+            className="bg-blue-500"
+            onClick={() => {
+              map.panTo();
+            }}
           >
-            <Marker position={center} />
-          </GoogleMap>
+            Find
+          </button>
         </div>
+        {img.map((item) => (
+          <img className="h-48" src={item} alt="" />
+        ))}
       </div>
-    </LoadScript>
+
+      <div className="w-7/12 h-screen">
+        <GoogleMap
+          mapContainerStyle={{ width: '100%', height: '100%' }}
+          zoom={18}
+          center={center}
+          onLoad={(map) => setMap(map)}
+        >
+          <Marker position={center} />
+        </GoogleMap>
+      </div>
+    </div>
   );
 }
 

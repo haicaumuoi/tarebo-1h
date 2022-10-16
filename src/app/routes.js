@@ -13,9 +13,7 @@ const SignUpPage = lazy(() => import('~/features/User/SignUp'));
 const SignInPage = lazy(() => import('~/features/User/SignInPage'));
 const Map = lazy(() => import('~/features/User/Map'));
 const TripList = lazy(() => import('~/features/User/TripList'));
-const PlanList = lazy(() => import('~/features/User/PlanList'));
-const TodoList = lazy(() => import('~/features/User/TodoList'));
-const ExpensesList = lazy(() => import('~/features/User/ExpensesList'));
+const TripListDetail = lazy(() => import('~/features/User/TripListDetail'));
 
 const HomePage = lazy(() => import('~/features/User/Home'));
 
@@ -67,12 +65,7 @@ const publicRoutes = {
       component: Map,
       layout: DefaultLayout,
     },
-    {
-      type: ROUTES_TYPE.public,
-      path: ROUTES_PATH.user.planlist,
-      component: PlanList,
-      layout: DefaultLayout,
-    },
+
     {
       type: ROUTES_TYPE.public,
       path: ROUTES_PATH.user.triplist,
@@ -81,14 +74,8 @@ const publicRoutes = {
     },
     {
       type: ROUTES_TYPE.public,
-      path: ROUTES_PATH.user.todolist,
-      component: TodoList,
-      layout: DefaultLayout,
-    },
-    {
-      type: ROUTES_TYPE.public,
-      path: ROUTES_PATH.user.expenseslist,
-      component: ExpensesList,
+      path: ROUTES_PATH.user.tripListDetail,
+      component: TripListDetail,
       layout: DefaultLayout,
     },
   ],

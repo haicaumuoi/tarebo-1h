@@ -103,6 +103,7 @@ const LoginPage = () => {
               {...register('password')}
               id="password"
               className="border border-[#7c7c7c] h-16 rounded-lg my-2 py-5 px-4 focus:outline-none"
+              type={'password'}
             />
             {errors.password && (
               <span className="text-[#df2a2a]">
